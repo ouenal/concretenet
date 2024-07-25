@@ -1,0 +1,76 @@
+# Licensed under the CC BY-NC 4.0 license (https://creativecommons.org/licenses/by-nc/4.0/)
+
+model:
+  visual_config:
+    input_dim: 6
+    dim: 32
+    output_dim: 16
+    repetitions: 2
+    num_classes: 20
+    threshold: 0.0
+    local_threshold: 0.5
+    invalid_classes: 2
+    merge_threshold: 0.5
+    max_num_instances: 30
+    # For decoding
+    threshold_num_points: 100
+    threshold_sem_score: 0.1
+  verbal_config:
+    input_dim: 768
+    output_dim: 128
+    model_str: sentence-transformers/all-mpnet-base-v2
+  fusion_config:
+    radii: [1.0, 2.5, 100.0]
+    num_heads: 4
+    num_layers: 2
+
+loss:
+  visual_config:
+    iou_threshold: 0.25
+    # Mimicking model.visual_config and dataset:
+    num_classes: 20
+    invalid_classes: 2
+    ignore_index: -100
+  fusion_config:
+    ignore_index: -100
+    contrast_loss_weight: 0.1
+
+dataset:
+  prefix: scanrefer
+  root_dir: # FILL IN
+  minibatch_size: 32
+  scale: 50
+  max_crop_size: 512
+  min_spatial_size: 128
+  max_num_points: 250000
+  ignore_index: -100
+
+train_dataloader:
+  batch_size: 4
+  num_workers: 1
+  shuffle: True
+  drop_last: True
+  pin_memory: True
+
+val_dataloader:
+  batch_size: 1
+  num_workers: 1
+  shuffle: False
+  drop_last: False
+  pin_memory: True
+
+trainer:
+  num_epochs: 400
+  pretraining:    # Cummulative number of epochs for each stage
+    semantic: -1  # Pretraining the point cloud encoder
+    candidate: -1 # Pretraining the candidate generation
+    instance: -1  # Pretraining the visual backbone
+  save_dir: output
+  save_freq: 8
+
+optimizer:
+  lr: 0.0003
+  weight_decay: 0.0001
+
+scheduler:
+  warmup_epochs: 200
