@@ -2,7 +2,7 @@
 Code release for the paper [**Four Ways to Improve Verbo-visual Fusion for Dense 3D Visual Grounding**](https://ouenal.github.io/concretenet/), ECCV 2024. <br>
 **Authors**: Ozan Unal, Christos Sakaridis, Suman Saha, Luc Van Gool <br>
 
-:star2: ConcreteNet is ranked **1st** on the ScanRefer online benchmark (19.08.2023-)!
+:star2: ConcreteNet is ranked **1st** on the ScanRefer online benchmark (08.2023-09.2024)!
 
 **Abstract**: 3D visual grounding is the task of localizing the object in a 3D scene which is referred by a description in natural language. With a wide range of applications ranging from autonomous indoor robotics to AR/VR, the task has recently risen in popularity. A common formulation to tackle 3D visual grounding is grounding-by-detection, where localization is done via bounding boxes. However, for real-life applications that require physical interactions, a bounding box insufficiently describes the geometry of an object. We therefore tackle the problem of dense 3D visual grounding, i.e. referral-based 3D instance segmentation. We propose a dense 3D grounding network ConcreteNet, featuring four novel stand-alone modules that aim to improve grounding performance for challenging repetitive instances, i.e. instances with distractors of the same semantic class. First, we introduce a bottom-up attentive fusion module that aims to disambiguate inter-instance relational cues, next, we construct a contrastive training scheme to induce separation in the latent space, we then resolve view-dependent utterances via a learned global camera token, and finally we employ multi-view ensembling to improve referred mask quality. ConcreteNet ranks 1st on the challenging ScanRefer online benchmark and has won the ICCV 3rd Workshop on Language for 3D Scenes "3D Object Localization" challenge.
 
@@ -65,11 +65,11 @@ To download the ScanRefer dataset, please refer to the [ScanRefer project page](
 ### Training
 As ConcreteNet is built on a grounding-by-selection strategy, to be able to learn meaningful mappings from natural language prompts to 3D instances, (1) we first pretrain the 3D instance segmentation backbone, and (2) only then introduce end-to-end training with verbo-visual fusion. ConcreteNet was trained with only a single Nvidia RTX 3090.
 
-**Step 1** can be trained as follows. Alternatively, this step can be skipped by directly downloading the provided checkpoint file [here](https://data.vision.ee.ethz.ch/ouenal/concretenet/pretrained.pth).
+**Step 1** can be trained as follows. Alternatively, this step can be skipped by directly downloading the provided checkpoint file [here](https://drive.google.com/file/d/1OCik7Yto60k9tFzMyDBs5JRZV-f1fFdr/view?usp=drive_link).
 ```bash
 python train.py --config_path config/pretraining.yaml
 ```
-For **Step 2**, we provide the checkpoint from step 1. The resulting model state_dict can be downloaded [here](https://data.vision.ee.ethz.ch/ouenal/concretenet/concretenet.pth) (43.84% Acc@50).
+For **Step 2**, we provide the checkpoint from step 1. The resulting model state_dict can be downloaded [here](https://drive.google.com/file/d/1a6FQcFcebP7lg1VmhAw6JGIVW6ReePbL/view?usp=drive_link) (43.84% Acc@50).
 ```bash
 python train.py --config_path config/concretenet.yaml --ckpt_path STEP1/CKPT/PATH
 ```
@@ -98,8 +98,8 @@ python eval.py --config_path config/pretraining.yaml --ckpt_path CKPT/PATH
 |   86.40   |   82.05   |    42.41    |    38.39    |    50.61   |    46.53   |
 
 ### Quick Access for Download Links:
-- [Pretrained checkpoint](https://data.vision.ee.ethz.ch/ouenal/concretenet/pretrained.pth) (121MB).
-- [Final checkpoint](https://data.vision.ee.ethz.ch/ouenal/concretenet/concretenet.pth) (580MB).
+- [Pretrained checkpoint](https://drive.google.com/file/d/1OCik7Yto60k9tFzMyDBs5JRZV-f1fFdr/view?usp=drive_link) (121MB).
+- [Final checkpoint](https://drive.google.com/file/d/1a6FQcFcebP7lg1VmhAw6JGIVW6ReePbL/view?usp=drive_link) (580MB).
 ---
 
 ### Citation
