@@ -14,7 +14,7 @@ from torch.optim import AdamW
 
 import json
 
-from network.factory import ModelFactory
+from network.concretenet import ConcreteNet
 from dataloader.factory import DatasetFactory
 from utils.losses import JointLoss
 from utils.loss_tracker import LossTracker
@@ -46,7 +46,7 @@ class Tester:
         self.dataset = DatasetFactory(split='val', **config['dataset'])
 
         # Build model, loss, optimizer and evaluator
-        self.model = ModelFactory(**config['model']).cuda()
+        self.model = ConcreteNet(**config['model']).cuda()
         self.model.eval()
         self.load_checkpoint(args.ckpt_path)
         self.evaluator = Evaluator(**config['evaluator'])
